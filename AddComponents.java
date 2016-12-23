@@ -58,19 +58,33 @@ public class AddComponents extends JFrame  {
         
         addPix();
         refresher.addActionListener(getButtonAction());
-add(panel, bord.CENTER);
+//add(panel, bord.CENTER);
            
     }
         private ActionListener getButtonAction(){
              ActionListener action;
         action = (ActionEvent e) -> {
-            //Thread t = new Thread(() -> {addPix();});
-            //t.start();
-
-             };
+            
+            try{
+                inner.removeAll();
+                inner.setOpaque(false);
+                
+            panel.remove(inner);
+            super.repaint();
+            bord.removeLayoutComponent(panel);
+            //bord.removeLayoutComponent(bord.getLayoutComponent(bord.CENTER));
+            }catch(NullPointerException n){
+                
+            }
+            Thread t = new Thread(() -> {addPix();});
+            t.start();
+            super.revalidate();
+         };
         return action;
         }
-final void addPix(){
+        //reads file directory and chooses pictures. Then 
+        //adds labels with pictures to a a grid then a gridbag to a border layout
+    final void addPix(){
         c.fill = GridBagConstraints.HORIZONTAL;
         nest = new JPanel();
         nest.setLayout(gridd);
@@ -81,8 +95,8 @@ final void addPix(){
         files = f.listFiles();
         labels = new JTextArea[files.length];
         plabels = new JLabel[files.length];
-
-        int ug = 0;
+        String fileDescription;
+        int fileIndex = 0;
         int ro=0, col=0;
         String ext = "";
         
@@ -93,25 +107,30 @@ final void addPix(){
                    imgT = img.getScaledInstance(120,100 , java.awt.Image.SCALE_SMOOTH);
                    ico = new ImageIcon(imgT);
                    int ind = file.getAbsolutePath().lastIndexOf('.');
-                   plabels[ug] = new JLabel(ico);
-                   plabels[ug].setPreferredSize(new Dimension(130,110));
-                   ro++;
+                   plabels[fileIndex] = new JLabel(ico);
+                   plabels[fileIndex].setPreferredSize(new Dimension(130,110));
+                   
                    if(ro%4 == 0){
                        ro = 0;
                        col++;
                    }
 
-                   labels[ug] = new JTextArea(file.getName());
-                   labels[ug].setBackground(Color.white);
-                   labels[ug].setOpaque(true);
+                   labels[fileIndex ] = new JTextArea(file.getName());
+                   labels[fileIndex ].setBackground(Color.white);
+                   labels[fileIndex ].setOpaque(true);
                    if(ind > 0){
                        ext = file.getAbsolutePath().substring(ind+1);
                    }
-                   if(ext.equals("jpg") || ext.equals("png") || ext.equals("jpeg")){
+                   
+                   if(ico != null && (ext.equals("jpg") || ext.equals("png") || ext.equals("jpeg"))){
+                       fileDescription = "<html>" + "File name: " + file.getName() + "<br>" + "Size: " + file.length()/1024 + " KB" + "</html>";
+                       plabels[fileIndex ].setToolTipText(fileDescription);
+                       
                        c.gridx = ro;
                        c.gridy = col;
-                       grid.setConstraints(plabels[ug], c);
-                       inner.add(plabels[ug]);
+                       grid.setConstraints(plabels[fileIndex], c);
+                       inner.add(plabels[fileIndex]);
+                       ro++;
                        
                    }
                 }
@@ -120,9 +139,10 @@ final void addPix(){
                    panel = new JScrollPane(inner);
                    panel.setBackground(Color.white);
              panel.setPreferredSize(new Dimension(300, 500));
-           add(panel, bord.CENTER);
+           add(inner, bord.CENTER);
          
            
     }
+
 }
               
