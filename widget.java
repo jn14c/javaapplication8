@@ -16,12 +16,12 @@ public class widget {
      
     public static void main(String[] args){
         // TODO code application logic here
-      d.height = 600;
-      d.width = 600;
+      d.height = 625;
+      d.width = 575;
       AddComponents addComponents = new AddComponents(); 
       addComponents.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );      
       
-      addComponents.setSize( 600, 600 ); // set frame size
+      addComponents.setSize( 575, 625 ); // set frame size
       addComponents.setVisible( true ); // display frame
       addComponents.setMinimumSize(d);
       addComponents.setOpacity(1);
