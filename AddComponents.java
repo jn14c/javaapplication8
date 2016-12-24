@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -41,7 +43,8 @@ public class AddComponents extends JFrame  {
     private GridBagConstraints c = new GridBagConstraints();
     private File f, oldFile;
     private File[] files;
-            
+    private JMenu fileMenu = new JMenu("File");
+    private JMenuBar menuBar = new JMenuBar();
     public AddComponents(){
         super("x-fer");
         setLayout(bord);
@@ -50,11 +53,14 @@ public class AddComponents extends JFrame  {
         inner = new JPanel();
         inner.setLayout(grid);
         inner.setSize(500, 500);
-
+        inner.setBackground(Color.white);
         add(refresher, bord.SOUTH);
-        
+        menuBar.setBackground(Color.white);
+        menuBar.add(fileMenu);
+        add(menuBar, bord.NORTH);
         addPix();
         panel = new JScrollPane(inner);
+        panel.setBorder(null);
         panel.setBackground(Color.white);
         panel.setPreferredSize(new Dimension(300, 500));
         refresher.addActionListener(getButtonAction());
