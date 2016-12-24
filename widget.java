@@ -19,7 +19,7 @@ public class widget {
       d.height = 650;
       d.width = 575;
       AddComponents addComponents = new AddComponents(); 
-      addComponents.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );      
+      addComponents.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );    
       
       addComponents.setSize( 575, 650 ); // set frame size
       addComponents.setVisible( true ); // display frame

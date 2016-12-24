@@ -54,6 +54,7 @@ public class AddComponents extends JFrame  {
         inner.setLayout(grid);
         inner.setSize(500, 500);
         inner.setBackground(Color.white);
+
         add(refresher, bord.SOUTH);
         menuBar.setBackground(Color.white);
         menuBar.add(fileMenu);
@@ -79,14 +80,16 @@ public class AddComponents extends JFrame  {
             }
             Thread t = new Thread(() -> {addPix();});
             t.start();
-
+            
         };
         return action;
         }
         //reads file directory and chooses pictures. Then 
         //adds labels with pictures to a a grid then a gridbag to a border layout
     final void addPix(){
-
+        refresher.setText("Loading...");
+        refresher.setEnabled(false);
+        repaint();
         f = new File(".");
 
         files = f.listFiles();
@@ -134,7 +137,10 @@ public class AddComponents extends JFrame  {
 
                 
             }
-       
+       refresher.setText("Refresh");
+       refresher.setEnabled(true);
+        repaint();
+        
     }
 
 }
