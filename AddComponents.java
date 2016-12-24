@@ -39,9 +39,9 @@ public class AddComponents extends JFrame  {
     private GridBagLayout grid = new GridBagLayout();
     private Image img, imgT;
     private GridBagConstraints c = new GridBagConstraints();
-    private File f;
+    private File f, oldFile;
     private File[] files;
-    
+            
     public AddComponents(){
         super("x-fer");
         setLayout(bord);
@@ -66,21 +66,14 @@ public class AddComponents extends JFrame  {
         action = (ActionEvent e) -> {
             
             try{
-                inner.removeAll();
-                //inner.setOpaque(false);
-                
-            panel.remove(inner);
-            
-            //bord.removeLayoutComponent(panel);
-            //bord.removeLayoutComponent(bord.getLayoutComponent(bord.CENTER));
+               inner.removeAll();
+               panel.remove(inner);
             }catch(NullPointerException n){
                 
             }
             Thread t = new Thread(() -> {addPix();});
             t.start();
-            inner.repaint();
-            panel.repaint();
-            super.repaint();
+
         };
         return action;
         }
@@ -89,6 +82,7 @@ public class AddComponents extends JFrame  {
     final void addPix(){
 
         f = new File(".");
+
         files = f.listFiles();
         plabels = new JLabel[files.length];
         String fileDescription;
@@ -123,25 +117,18 @@ public class AddComponents extends JFrame  {
                        c.gridy = col;
                        grid.setConstraints(plabels[fileIndex], c);
                        inner.add(plabels[fileIndex]);
-                       inner.repaint();
+                       revalidate(); 
+                       repaint();
 
                        ro++;
                        
                    }
                    
                 }
-            try{
-                
-            panel.repaint();
-            
-            }catch(NullPointerException n){
+
                 
             }
-        }
-             
-           //add(panel, bord.CENTER);
-
-           
+       
     }
 
 }
